@@ -2,7 +2,6 @@ let mongoose = require('mongoose');
 let Campground = require('../models/campground');
 let cities = require('./cities');
 let helpers = require('./seedHelpers');
-const {compile} = require("ejs");
 
 mongoose.connect('mongodb://localhost:27017/yelpcamp')
     .then(() => {
