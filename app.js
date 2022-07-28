@@ -1,15 +1,18 @@
+// import libs and application creating
 let express = require('express');
 let mongoose = require('mongoose');
 let methodOverride = require('method-override');
 let app = express();
 let path = require('path');
 let Campground = require('./models/campground');
+let ejsMate = require('ejs-mate');
 
 // basic setting and daemon
 app.use(methodOverride('_method'));
 app.use(express.urlencoded({extended: true}));
 app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'ejs');
+app.engine('ejs', ejsMate);
 app.listen('3000', () => {
     console.log('Listening on port 3000!');
 });
@@ -33,6 +36,10 @@ app.get('/campgrounds', async (req, res) => {
     res.render('index', {cgs});
 });
 
+app.get('/campgrounds/new', (req, res) => {
+    res.render('new');
+})
+
 app.get('/campgrounds/:id', async (req, res) => {
     let {id} = req.params;
     let cg = await Campground.findById(id);
@@ -47,7 +54,7 @@ app.get('/campgrounds/:id/edit', async (req, res) => {
     res.render('edit', {cg});
 });
 
-app.patch('/campgrounds/:id', async (req, res) => {
+app.put('/campgrounds/:id', async (req, res) => {
     let {id} = req.params;
     // console.log(req.params);
     // console.log(req.body);
@@ -59,11 +66,14 @@ app.patch('/campgrounds/:id', async (req, res) => {
     res.redirect(`/campgrounds/${id}`);
 });
 
-app.get('/campgrounds/new', (req, res) => {
-    res.render('new');
-})
-
 app.post('/campgrounds/new', async (req, res) => {
     let {name, location} = req.body;
-    await Campground.create({name: name, location: location});
+    let newCampground = await Campground.create({name: name, location: location});
+    res.redirect(`/campgrounds/${newCampground._id}`);
+})
+
+app.delete('/campgrounds/:id', async (req, res) => {
+    let {id} = req.params;
+    await Campground.findByIdAndDelete(id);
+    res.redirect('/campgrounds');
 })

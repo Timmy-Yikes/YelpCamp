@@ -1,19 +1,8 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title><%= cg.name %>></title>
-</head>
-<body>
+<% layout('/layouts/boilerplate') %>
     <h1><%= cg.name %></h1>
     <p><%= cg.location %></p>
     <a href="/campgrounds/<%= cg._id %>/edit">Edit</a>
-    <form action="/campgrounds?_method=DELETE" method="post">
+    <form action="/campgrounds/<%= cg._id %>?_method=DELETE" method="post">
         <button>Delete</button>
     </form>
     <a href="/campgrounds">Back to index</a>
-</body>
-</html>
