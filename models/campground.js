@@ -4,6 +4,9 @@ let CampgroundSchema = mongoose.Schema({
     name: {
         type: String
     },
+    image: {
+        type: String
+    },
     price: {
         type: Number
     },
