@@ -1,7 +1,37 @@
 <% layout('/layouts/boilerplate') %>
-<form action="/campgrounds/new" method="post">
-    <label for="nameInput">Name:&nbsp;</label><input type="text" name="name" id="nameInput">
-    <label for="locInput">Location:&nbsp;</label><input type="text" name="location" id="locInput">
-    <button>Submit</button>
-</form>
-<a href="/campgrounds">Back</a>
+<div class="row">
+    <h1 class="text-center">New Campground</h1>
+    <div class="col offset-3">
+        <form action="/campgrounds/new" method="post">
+            <div class="mb-3">
+                <label for="nameInput" class="form-label">Name:&nbsp;</label>
+                <input type="text" name="name" id="nameInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="imgInput" class="form-label">Image URL:&nbsp;</label>
+                <input type="text" name="image" id="imgInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="priceInput" class="form-label">Price:&nbsp;</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">$</span>
+                    <input type="number" class="form-control" id="priceInput" name="price" aria-label="Price" aria-describedby="basic-addon1">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="descInput" class="form-label">Description:&nbsp;</label>
+                <textarea name="description" id="descInput" class="form-control"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="locInput" class="form-label">Location:&nbsp;</label>
+                <input type="text" name="location" id="locInput" class="form-control">
+            </div>
+            <div class="mb-3">
+                <button class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+        <a class="btn btn-secondary" href="/campgrounds">Back</a>
+    </div>
+</div>
+
+

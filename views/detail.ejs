@@ -1,10 +1,24 @@
 <% layout('/layouts/boilerplate') %>
-    <h1><%= cg.name %></h1>
-    <p><%= cg.location %></p>
-    <img src="<%= cg.image %>" alt="">
-    <p><%= cg.description %></p>
-    <a href="/campgrounds/<%= cg._id %>/edit">Edit</a>
-    <form action="/campgrounds/<%= cg._id %>?_method=DELETE" method="post">
-        <button>Delete</button>
-    </form>
-    <a href="/campgrounds">Back to index</a>
+<div class="row">
+    <div class="col-6 offset-3">
+        <div class="card mb-3">
+            <img src="<%= cg.image %>" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title"><%= cg.name %></h5>
+                <p class="card-text"><%= cg.description %></p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Price:&nbsp;<%= cg.price %></li>
+                <li class="list-group-item text-muted">Location:&nbsp;<%= cg.location %></li>
+            </ul>
+            <div class="card-body">
+                <a href="/campgrounds/<%= cg._id %>/edit" class="card-link btn btn-info">Edit</a>
+                <form action="/campgrounds/<%= cg._id %>?_method=DELETE" method="post" class="d-inline">
+                    <button class="card-link btn btn-danger">Delete</button>
+                </form>
+                <a href="/campgrounds" class="card-link btn btn-secondary">Back to index</a>
+            </div>
+        </div>
+    </div>
+</div>
+
