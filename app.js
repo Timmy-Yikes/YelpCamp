@@ -6,7 +6,7 @@ let app = express();
 let path = require('path');
 let Campground = require('./models/campground');
 let ejsMate = require('ejs-mate');
-let AppError = require('AppError');A
+let AppError = require('./AppError');
 
 // basic setting and daemon
 app.use(methodOverride('_method'));
@@ -80,6 +80,7 @@ app.delete('/campgrounds/:id', async (req, res) => {
 })
 
 app.use((err, req, res, next) => {
+
     let {status = 500, message = 'Something is wrong. Though I do not know which one.'} = err;
     res.status(status).send(message);
 })
