@@ -80,7 +80,6 @@ app.delete('/campgrounds/:id', async (req, res) => {
 })
 
 app.use((err, req, res, next) => {
-
     let {status = 500, message = 'Something is wrong. Though I do not know which one.'} = err;
     res.status(status).send(message);
 })
