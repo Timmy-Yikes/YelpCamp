@@ -8,6 +8,13 @@ let Campground = require('./models/campground');
 let ejsMate = require('ejs-mate');
 let ExpressError = require('./utility/ExpressError');
 let catchAsync = require('./utility/catchAsync');
+let Joi = require('joi');
+let cgSchema = require('./validationSchemas');
+let validateCampground = (req, res, next) => {
+    let result = cgSchema.validate(req.body);
+    if (result.error) throw new ExpressError(400, result.error.details.map(elem => elem.message).join(','));
+    else next();
+}
 
 // basic setting and daemon
 app.use(methodOverride('_method'));
@@ -53,7 +60,7 @@ app.get('/campgrounds/:id/edit', catchAsync(async (req, res) => {
     res.render('edit', {cg});
 }));
 
-app.put('/campgrounds/:id', catchAsync(async (req, res) => {
+app.put('/campgrounds/:id', validateCampground, catchAsync(async (req, res) => {
     let {id} = req.params;
     // console.log(req.params);
     // console.log(req.body);
@@ -65,9 +72,8 @@ app.put('/campgrounds/:id', catchAsync(async (req, res) => {
     res.redirect(`/campgrounds/${id}`);
 }));
 
-app.post('/campgrounds/new', catchAsync(async (req, res) => {
+app.post('/campgrounds/new', validateCampground, catchAsync(async (req, res) => {
     let {name, image, price, description, location} = req.body;
-    if (!name || !image || !price || !description || !location) throw new ExpressError(400, 'Incomplete new campground info');
     let newCampground = await Campground.create({name, image, price, description, location});
     res.redirect(`/campgrounds/${newCampground._id}`);
 }));
@@ -85,5 +91,5 @@ app.all('*', (req, res, next) =>  {
 // Error handling
 app.use((err, req, res, next) => {
     let {status = 500, message = 'Something is wrong. Though I do not know which one.'} = err;
-    res.status(status).send(message);
+    res.status(status).render('error', {statusCode : status, message});
 });
