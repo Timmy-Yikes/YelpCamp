@@ -6,7 +6,8 @@ let app = express();
 let path = require('path');
 let Campground = require('./models/campground');
 let ejsMate = require('ejs-mate');
-let AppError = require('./AppError');
+let ExpressError = require('./utility/ExpressError');
+let catchAsync = require('./utility/catchAsync');
 
 // basic setting and daemon
 app.use(methodOverride('_method'));
@@ -26,36 +27,33 @@ mongoose.connect('mongodb://localhost:27017/yelpcamp')
         console.log(err);
     });
 
-// routing setting
+// route setting
 app.get('/', (req, res) => {
     res.send('YelpCamp!');
 });
 
-app.get('/campgrounds', async (req, res) => {
+app.get('/campgrounds', catchAsync(async (req, res) => {
     let cgs = await Campground.find({});
-    if (cgs instanceof Error) return console.log('err on building cgs for index!');
     res.render('index', {cgs});
-});
+}));
 
 app.get('/campgrounds/new', (req, res) => {
     res.render('new');
-})
+});
 
-app.get('/campgrounds/:id', async (req, res) => {
+app.get('/campgrounds/:id', catchAsync(async (req, res) => {
     let {id} = req.params;
     let cg = await Campground.findById(id);
-    if (cg instanceof Error) return console.log('err on building cg for detail!');
     res.render('detail', {cg});
-});
+}));
 
-app.get('/campgrounds/:id/edit', async (req, res) => {
+app.get('/campgrounds/:id/edit', catchAsync(async (req, res) => {
     let {id} = req.params;
     let cg = await Campground.findById(id);
-    if (cg instanceof Error) return console.log('err on building cg for editing!');
     res.render('edit', {cg});
-});
+}));
 
-app.put('/campgrounds/:id', async (req, res) => {
+app.put('/campgrounds/:id', catchAsync(async (req, res) => {
     let {id} = req.params;
     // console.log(req.params);
     // console.log(req.body);
@@ -65,21 +63,27 @@ app.put('/campgrounds/:id', async (req, res) => {
             console.log(res);
         });
     res.redirect(`/campgrounds/${id}`);
-});
+}));
 
-app.post('/campgrounds/new', async (req, res) => {
-    let {name, location} = req.body;
-    let newCampground = await Campground.create({name: name, location: location});
+app.post('/campgrounds/new', catchAsync(async (req, res) => {
+    let {name, image, price, description, location} = req.body;
+    if (!name || !image || !price || !description || !location) throw new ExpressError(400, 'Incomplete new campground info');
+    let newCampground = await Campground.create({name, image, price, description, location});
     res.redirect(`/campgrounds/${newCampground._id}`);
-})
+}));
 
-app.delete('/campgrounds/:id', async (req, res) => {
+app.delete('/campgrounds/:id', catchAsync(async (req, res) => {
     let {id} = req.params;
     await Campground.findByIdAndDelete(id);
     res.redirect('/campgrounds');
-})
+}));
 
+app.all('*', (req, res, next) =>  {
+    next(new ExpressError(404, '404 Not Found'));
+});
+
+// Error handling
 app.use((err, req, res, next) => {
     let {status = 500, message = 'Something is wrong. Though I do not know which one.'} = err;
     res.status(status).send(message);
-})
+});
