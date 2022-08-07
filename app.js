@@ -8,8 +8,9 @@ let Campground = require('./models/campground');
 let ejsMate = require('ejs-mate');
 let ExpressError = require('./utility/ExpressError');
 let catchAsync = require('./utility/catchAsync');
-let Joi = require('joi');
-let cgSchema = require('./validationSchemas');
+let cgSchema = require('./validationSchemas').campgroundSchema;
+
+// Define helper functions
 let validateCampground = (req, res, next) => {
     let result = cgSchema.validate(req.body);
     if (result.error) throw new ExpressError(400, result.error.details.map(elem => elem.message).join(','));
@@ -62,13 +63,8 @@ app.get('/campgrounds/:id/edit', catchAsync(async (req, res) => {
 
 app.put('/campgrounds/:id', validateCampground, catchAsync(async (req, res) => {
     let {id} = req.params;
-    // console.log(req.params);
-    // console.log(req.body);
-    let {name, location} = req.body;
-    Campground.findByIdAndUpdate(id, {name: name, location: location}, {new: true})
-        .then(res => {
-            console.log(res);
-        });
+    let {name, image, price, description, location} = req.body;
+    await Campground.findByIdAndUpdate(id, {name, image, price, description, location}, {new: true});
     res.redirect(`/campgrounds/${id}`);
 }));
 

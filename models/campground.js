@@ -2,19 +2,24 @@ let mongoose = require('mongoose');
 
 let CampgroundSchema = mongoose.Schema({
     name: {
-        type: String
+        type: String,
+        required: true
     },
     image: {
-        type: String
+        type: String,
+        required: true
     },
     price: {
-        type: Number
+        type: Number,
+        required: true
     },
     description: {
-        type: String
+        type: String,
+        required: true
     },
     location: {
-        type: String
+        type: String,
+        required: true
     }
 });
 
