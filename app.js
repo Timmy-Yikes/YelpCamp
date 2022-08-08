@@ -10,7 +10,7 @@ let ExpressError = require('./utility/ExpressError');
 let catchAsync = require('./utility/catchAsync');
 let cgSchema = require('./validationSchemas').campgroundSchema;
 
-// Define helper functions
+// define helper functions
 let validateCampground = (req, res, next) => {
     let result = cgSchema.validate(req.body);
     if (result.error) throw new ExpressError(400, result.error.details.map(elem => elem.message).join(','));
