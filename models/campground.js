@@ -1,4 +1,5 @@
 let mongoose = require('mongoose');
+const {Schema} = require("mongoose");
 
 let CampgroundSchema = mongoose.Schema({
     name: {
@@ -20,7 +21,11 @@ let CampgroundSchema = mongoose.Schema({
     location: {
         type: String,
         required: true
-    }
+    },
+    reviews: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Review'
+    }]
 });
 
 let Campground = mongoose.model('Campground', CampgroundSchema);

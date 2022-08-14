@@ -84,7 +84,7 @@ app.all('*', (req, res, next) =>  {
     next(new ExpressError(404, '404 Not Found'));
 });
 
-// Error handling
+// error handling
 app.use((err, req, res, next) => {
     let {status = 500, message = 'Something is wrong. Though I do not know which one.'} = err;
     res.status(status).render('error', {statusCode : status, message});
