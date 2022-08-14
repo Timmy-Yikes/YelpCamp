@@ -16,6 +16,7 @@
                 <form action="/campgrounds/<%= cg._id %>?_method=DELETE" method="post" class="d-inline">
                     <button class="card-link btn btn-danger">Delete</button>
                 </form>
+                <a href="/campgrounds/<%= cg._id %>/reviews/new" class="card-link btn btn-dark">Add some reviews</a>
                 <a href="/campgrounds" class="card-link btn btn-secondary">Back to index</a>
             </div>
         </div>

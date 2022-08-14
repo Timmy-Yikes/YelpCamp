@@ -5,14 +5,22 @@ let methodOverride = require('method-override');
 let app = express();
 let path = require('path');
 let Campground = require('./models/campground');
+let Review = require('./models/review');
 let ejsMate = require('ejs-mate');
 let ExpressError = require('./utility/ExpressError');
 let catchAsync = require('./utility/catchAsync');
 let cgSchema = require('./validationSchemas').campgroundSchema;
+let rSchema = require('./validationSchemas').reviewSchema;
 
 // define helper functions
 let validateCampground = (req, res, next) => {
     let result = cgSchema.validate(req.body);
+    if (result.error) throw new ExpressError(400, result.error.details.map(elem => elem.message).join(','));
+    else next();
+}
+
+let validateReview = (req, res, next) => {
+    let result = rSchema.validate(req.body);
     if (result.error) throw new ExpressError(400, result.error.details.map(elem => elem.message).join(','));
     else next();
 }
@@ -55,6 +63,21 @@ app.get('/campgrounds/:id', catchAsync(async (req, res) => {
     res.render('detail', {cg});
 }));
 
+app.get('/campgrounds/:cgId/reviews/new', catchAsync(async (req, res) => {
+    let {cgId} = req.params;
+    let cg = await Campground.findById(cgId);
+    res.render('newReview', {cg});
+}))
+
+app.post('/campgrounds/:cgId/reviews', validateReview, catchAsync(async (req, res) => {
+    let {cgId} = req.params;
+    let cg = await Campground.findById(cgId);
+    let newReview = await Review.create(req.body);
+    cg.reviews.push(newReview);
+    await cg.save();
+    res.redirect(`/campgrounds/${cgId}`);
+}))
+
 app.get('/campgrounds/:id/edit', catchAsync(async (req, res) => {
     let {id} = req.params;
     let cg = await Campground.findById(id);
@@ -63,8 +86,7 @@ app.get('/campgrounds/:id/edit', catchAsync(async (req, res) => {
 
 app.put('/campgrounds/:id', validateCampground, catchAsync(async (req, res) => {
     let {id} = req.params;
-    let {name, image, price, description, location} = req.body;
-    await Campground.findByIdAndUpdate(id, {name, image, price, description, location}, {new: true});
+    await Campground.findByIdAndUpdate(id, req.body, {new: true});
     res.redirect(`/campgrounds/${id}`);
 }));
 
