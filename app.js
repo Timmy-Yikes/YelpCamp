@@ -1,14 +1,14 @@
 // import libs and application creating
 let express = require('express');
 let mongoose = require('mongoose');
-let methodOverride = require('method-override');
 let app = express();
 let path = require('path');
-let Campground = require('./models/campground');
-let Review = require('./models/review');
+let methodOverride = require('method-override');
 let ejsMate = require('ejs-mate');
 let ExpressError = require('./utility/ExpressError');
 let catchAsync = require('./utility/catchAsync');
+let Campground = require('./models/campground');
+let Review = require('./models/review');
 let cgSchema = require('./validationSchemas').campgroundSchema;
 let rSchema = require('./validationSchemas').reviewSchema;
 
