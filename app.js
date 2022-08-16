@@ -59,7 +59,7 @@ app.get('/campgrounds/new', (req, res) => {
 
 app.get('/campgrounds/:id', catchAsync(async (req, res) => {
     let {id} = req.params;
-    let cg = await Campground.findById(id);
+    let cg = await Campground.findById(id).populate('reviews');
     res.render('detail', {cg});
 }));
 
@@ -98,9 +98,20 @@ app.post('/campgrounds/new', validateCampground, catchAsync(async (req, res) => 
 
 app.delete('/campgrounds/:id', catchAsync(async (req, res) => {
     let {id} = req.params;
+    await Review.deleteMany({campground: id});
     await Campground.findByIdAndDelete(id);
     res.redirect('/campgrounds');
 }));
+
+app.delete('/campgrounds/:cgId/reviews/:rId', catchAsync(async (req, res) => {
+    let {cgId, rId} = req.params;
+    let cg = await Campground.findById(cgId);
+    let r = await Review.findById(rId);
+    cg.reviews.splice(cg.reviews.indexOf(rId), 1);
+    await Review.findByIdAndDelete(rId);
+    await cg.save();
+    res.redirect(`/campgrounds/${cgId}`);
+}))
 
 app.all('*', (req, res, next) =>  {
     next(new ExpressError(404, '404 Not Found'));
@@ -108,6 +119,6 @@ app.all('*', (req, res, next) =>  {
 
 // error handling
 app.use((err, req, res, next) => {
-    let {status = 500, message = 'Something is wrong. Though I do not know which one.'} = err;
-    res.status(status).render('error', {statusCode : status, message});
+    let {status = 500, stack} = err;
+    res.status(status).render('error', {statusCode : status, stack});
 });
