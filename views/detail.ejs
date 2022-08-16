@@ -1,6 +1,6 @@
 <% layout('/layouts/boilerplate') %>
 <div class="row">
-    <div class="col-6 offset-3">
+    <div class="col-6">
         <div class="card mb-3">
             <img src="<%= cg.image %>" class="card-img-top" alt="...">
             <div class="card-body">
@@ -20,6 +20,19 @@
                 <a href="/campgrounds" class="card-link btn btn-secondary">Back to index</a>
             </div>
         </div>
+    </div>
+    <div class="col-6">
+        <% for (let review of cg.reviews) { %>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Review:<%= review.text %></h5>
+                    <p class="card-text">Rating:<%= review.rating %></p>
+                    <form action="/campgrounds/<%= cg._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
+                        <button class="card-link btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        <% } %>
     </div>
 </div>
 

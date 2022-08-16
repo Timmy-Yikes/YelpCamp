@@ -8,6 +8,10 @@ let reviewSchema = new mongoose.Schema({
         type: Number,
         min: 0,
         max: 5
+    },
+    campground: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Campground'
     }
 });
 
