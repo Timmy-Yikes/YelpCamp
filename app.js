@@ -34,6 +34,7 @@ mongoose.connect('mongodb://localhost:27017/yelpcamp')
 // route setting
 app.use('/campgrounds', cgRoutes);
 app.use('/campgrounds/:cgId/reviews', rRoutes);
+app.use(express.static('public'));
 
 app.get('/', (req, res) => {
     res.send('YelpCamp!');
