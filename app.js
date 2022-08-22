@@ -8,6 +8,7 @@ let ejsMate = require('ejs-mate');
 let ExpressError = require('./utility/ExpressError');
 let cgRoutes = require('./routes/campgrounds');
 let rRoutes = require('./routes/reviews');
+let session = require('express-session');
 
 // basic setting and daemon
 app.use(methodOverride('_method'));
