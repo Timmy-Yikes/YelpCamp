@@ -6,10 +6,6 @@ let path = require('path');
 let methodOverride = require('method-override');
 let ejsMate = require('ejs-mate');
 let ExpressError = require('./utility/ExpressError');
-let catchAsync = require('./utility/catchAsync');
-let Campground = require('./models/campground');
-let Review = require('./models/review');
-let rSchema = require('./validationSchemas').reviewSchema;
 let cgRoutes = require('./routes/campgrounds');
 let rRoutes = require('./routes/reviews');
 
@@ -34,7 +30,7 @@ mongoose.connect('mongodb://localhost:27017/yelpcamp')
 // route setting
 app.use('/campgrounds', cgRoutes);
 app.use('/campgrounds/:cgId/reviews', rRoutes);
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
     res.send('YelpCamp!');
