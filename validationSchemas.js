@@ -16,3 +16,10 @@ module.exports.reviewSchema = Joi.object({
         Joi.number()
     ]
 })
+
+module.exports.userSchema = Joi.object({
+    username: Joi.string().min(3).required(),
+    email: Joi.string().email(),
+    password: Joi.string().min(8).required(),
+    repeat_password: Joi.ref('password'),
+});

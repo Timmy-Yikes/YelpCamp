@@ -6,10 +6,16 @@ let path = require('path');
 let methodOverride = require('method-override');
 let ejsMate = require('ejs-mate');
 let ExpressError = require('./utility/ExpressError');
+
 let cgRoutes = require('./routes/campgrounds');
-let rRoutes = require('./routes/reviews');
+let reviewRoutes = require('./routes/reviews');
+let userRoutes = require('./routes/users');
+
 let session = require('express-session');
 let flash = require('connect-flash');
+let passport = require('passport');
+let LocalStrategy = require('passport-local');
+let User = require('./models/user');
 
 // basic setting and daemon
 app.use(methodOverride('_method'));
@@ -24,6 +30,13 @@ app.use(session({
     }
 }));
 app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'ejs');
 app.engine('ejs', ejsMate);
@@ -45,8 +58,11 @@ app.use((req, res, next) => {
     res.locals.error = req.flash('error');
     next();
 })
+
 app.use('/campgrounds', cgRoutes);
-app.use('/campgrounds/:cgId/reviews', rRoutes);
+app.use('/campgrounds/:cgId/reviews', reviewRoutes);
+app.use('/', userRoutes);
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
