@@ -33,9 +33,9 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+passport.use(new LocalStrategy(User.authenticate())); // Normally you need to put a verify func into strategy manually, but that Mongoose-related package seems to do it for us.
+passport.serializeUser(User.serializeUser()); // Before using Passport strategy authenticating: Install => Configure (Put verify func) => Register (Use passport.use) => Employ (Put it in passport.authenticate, which is a middleware in routes)
+passport.deserializeUser(User.deserializeUser()); // Again, that Mongoose-related package provides session callbacks needed.
 
 app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'ejs');

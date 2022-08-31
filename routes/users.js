@@ -22,18 +22,13 @@ router.get('/login', async (req, res) => {
     res.render('users/login');
 });
 
-router.get('/logout', (req, res, next) => {
-    if (!req.isAuthenticated()) {
-        req.flash('error', 'Come on you are not logged in!');
-        res.redirect('/login');
-    } else {
-        // Here we have to put all remnants into the parenthesis or the code doesn't work.
-        req.logout(err => {
-            if(err) return next(err);
-            req.flash('success', 'Successfully logged out!');
-            res.redirect('/campgrounds/');
-        });
-    }
+router.post('/logout', (req, res, next) => {
+    // Here we have to put all remnants into the parenthesis or the code doesn't work.
+    req.logout(err => {
+        if(err) return next(err);
+        req.flash('success', 'Successfully logged out!');
+        res.redirect('/campgrounds/');
+    });
 });
 
 router.post('/register', validateUser, async (req, res, next) => {

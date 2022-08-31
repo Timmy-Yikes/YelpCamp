@@ -15,7 +15,9 @@
                     <a href="/register" class="nav-link">Sign up</a>
                     <a href="/login" class="nav-link">Log in</a>
                 <% } else { %>
-                    <a href="/logout" class="nav-link">Log out</a>
+                        <form action="/logout" method="post">
+                            <button class="nav-link btn btn-secondary">Log out</button>
+                        </form>
                 <% } %>
             </div>
         </div>
