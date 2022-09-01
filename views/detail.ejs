@@ -10,14 +10,17 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">Price:&nbsp;<%= cg.price %></li>
                 <li class="list-group-item text-muted">Location:&nbsp;<%= cg.location %></li>
+                <li class="list-group-item text-muted">Author: <%= cg.author.username %></li>
             </ul>
             <div class="card-body">
-                <a href="/campgrounds/<%= cg._id %>/edit" class="card-link btn btn-info">Edit</a>
-                <form action="/campgrounds/<%= cg._id %>?_method=DELETE" method="post" class="d-inline">
-                    <button class="card-link btn btn-danger">Delete</button>
-                </form>
-                <a href="/campgrounds/<%= cg._id %>/reviews/new" class="card-link btn btn-dark">Add some reviews</a>
-                <a href="/campgrounds" class="card-link btn btn-secondary">Back to index</a>
+                <% if (currentUser && currentUser._id.equals(cg.author._id)) { %>
+                    <a href="/campgrounds/<%= cg._id %>/edit" class="card-link btn btn-outline-primary">Edit</a>
+                    <form action="/campgrounds/<%= cg._id %>?_method=DELETE" method="post" class="d-inline">
+                        <button class="card-link btn btn-outline-danger">Delete</button>
+                    </form>
+                <% } %>
+                <a href="/campgrounds/<%= cg._id %>/reviews/new" class="card-link btn btn-outline-info">Add some reviews</a>
+                <a href="/campgrounds" class="card-link btn btn-outline-secondary">Back to index</a>
             </div>
         </div>
     </div>
@@ -27,9 +30,12 @@
                 <div class="card-body">
                     <h5 class="card-title">Review:<%= review.text %></h5>
                     <p class="card-text">Rating:<%= review.rating %></p>
-                    <form action="/campgrounds/<%= cg._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
-                        <button class="card-link btn btn-sm btn-danger">Delete</button>
-                    </form>
+                    <p class="card-text">Author:<%= review.author.username %></p>
+                    <% if (review.author.username.equals(currentUser.username)) { %>
+                        <form action="/campgrounds/<%= cg._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
+                            <button class="card-link btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    <% } %>
                 </div>
             </div>
         <% } %>

@@ -31,11 +31,14 @@
                 <input type="text" name="location" id="locInput" class="form-control" required>
                 <div class="valid-feedback">Good!</div>
             </div>
+            <div>
+                <input type="hidden" name="author" value="<%= currentUser._id %>">
+            </div>
             <div class="mb-3">
-                <button class="btn btn-primary">Submit</button>
+                <button class="btn btn-outline-primary">Submit</button>
             </div>
         </form>
-        <a class="btn btn-secondary" href="/campgrounds">Back</a>
+        <a class="btn btn-outline-secondary" href="/campgrounds">Back</a>
     </div>
 </div>
 

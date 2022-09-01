@@ -12,6 +12,10 @@ let reviewSchema = new mongoose.Schema({
     campground: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Campground'
+    },
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     }
 });
 

@@ -22,10 +22,10 @@
                 <option value="4.5"></option>
                 <option value="5" label="5"></option>
             </datalist>
-            <label for="campground" hidden class="form-label"></label>
-            <input id="campground" type="text" name="campground" hidden value="<%= cg._id %>" class="form-control">
+            <input type="hidden" name="campground" value="<%= cg._id %>">
+            <input type="hidden" name="author" value="<%= currentUser._id %>">
         </div>
     </div>
-    <button class="btn btn-secondary mb-3">Submit</button>
+    <button class="btn btn-outline-secondary mb-3">Submit</button>
 </form>
-<a href="/campgrounds/<%= cg._id %>" class="btn btn-info">Back to campground detail</a>
+<a href="/campgrounds/<%= cg._id %>" class="btn btn-outline-info">Back to campground detail</a>

@@ -5,6 +5,7 @@ const Review = require("../models/review");
 const {reviewSchema: rSchema} = require("../validationSchemas");
 const ExpressError = require("../utility/ExpressError");
 let router = express.Router({mergeParams: true});
+let isLoggedIn = require('../utility/isLoggedIn');
 
 let validateReview = (req, res, next) => {
     let result = rSchema.validate(req.body);
@@ -12,13 +13,13 @@ let validateReview = (req, res, next) => {
     else next();
 }
 
-router.get('/new', catchAsync(async (req, res) => {
+router.get('/new', isLoggedIn, catchAsync(async (req, res) => {
     let {cgId} = req.params;
     let cg = await Campground.findById(cgId);
     res.render('newReview', {cg});
 }))
 
-router.post('/', validateReview, catchAsync(async (req, res) => {
+router.post('/', isLoggedIn, validateReview, catchAsync(async (req, res) => {
     let {cgId} = req.params;
     let cg = await Campground.findById(cgId);
     let newReview = await Review.create(req.body);
@@ -28,7 +29,7 @@ router.post('/', validateReview, catchAsync(async (req, res) => {
     res.redirect(`/campgrounds/${cgId}`);
 }))
 
-router.delete('/:rId', catchAsync(async (req, res) => {
+router.delete('/:rId', isLoggedIn, catchAsync(async (req, res) => {
     let {cgId, rId} = req.params;
     let cg = await Campground.findById(cgId);
     let r = await Review.findById(rId);
