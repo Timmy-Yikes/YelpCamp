@@ -29,7 +29,8 @@ let initDB = async () => {
             image: 'https://source.unsplash.com/collection/483251',
             price: Math.ceil(Math.random() * 20),
             description: "It's a campground! What do you want for more?",
-            location: `${cities[rand].city}, ${cities[rand].state}`
+            location: `${cities[rand].city}, ${cities[rand].state}`,
+            author: "63102361eeff3718620d5130"
         });
         camps.push(camp);
     }

@@ -25,7 +25,12 @@ let CampgroundSchema = mongoose.Schema({
     reviews: [{
         type: Schema.Types.ObjectId,
         ref: 'Review'
-    }]
+    }],
+    author: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
+    }
 });
 
 let Campground = mongoose.model('Campground', CampgroundSchema);
