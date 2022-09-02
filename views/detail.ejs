@@ -28,9 +28,11 @@
         <% for (let review of cg.reviews) { %>
             <div class="card mb-3">
                 <div class="card-body">
-                    <h5 class="card-title">Review:<%= review.text %></h5>
-                    <h6 class="card-subtitle text-muted my-2">Author:<%= review.author.username %></h6>
-                    <p class="card-text">Rating:<%= review.rating %></p>
+                    <h5 class="card-title"><%= review.author.username %></h5>
+                    <p class="starability-result" data-rating="<%= review.rating %>">
+                        Rated: <%= review.rating %> stars
+                    </p>
+                    <p class="my-2"><%= review.text %></p>
                     <% if (currentUser && review.author._id.equals(currentUser._id)) { %>
                         <form action="/campgrounds/<%= cg._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
                             <button class="card-link btn btn-sm btn-outline-danger">Delete</button>

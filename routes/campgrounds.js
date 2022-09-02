@@ -5,16 +5,15 @@ let {catchAsync, validateCampground, isLoggedIn, isCgAuthor} = require('../utili
 
 router.get('/', catchAsync(getIndex));
 
-router.get('/new', isLoggedIn, renderNewForm);
+router.route('/new')
+    .get(isLoggedIn, renderNewForm)
+    .post(isLoggedIn, validateCampground, catchAsync(postNewForm));
 
-router.get('/:id', catchAsync(getDetail));
+router.route('/:id')
+    .get(catchAsync(getDetail))
+    .put(isLoggedIn, isCgAuthor, validateCampground, catchAsync(putEditForm))
+    .delete(isLoggedIn, isCgAuthor, catchAsync(deleteCampground));
 
 router.get('/:id/edit', isLoggedIn, isCgAuthor, catchAsync(renderEditForm));
-
-router.put('/:id', isLoggedIn, isCgAuthor, validateCampground, catchAsync(putEditForm));
-
-router.post('/new', isLoggedIn, validateCampground, catchAsync(postNewForm));
-
-router.delete('/:id', isLoggedIn, isCgAuthor, catchAsync(deleteCampground));
 
 module.exports = router;

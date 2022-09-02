@@ -7,21 +7,20 @@
             <textarea id="text" name="text" class="form-control mb-3" required></textarea>
             <div class="valid-feedback">Good!</div>
             <div class="invalid-feedback">Please enter some text.</div>
-            <label for="rating" class="form-label mb-3">Rating:</label>
-            <input type="range" id="rating" name="rating" class="form-range mb-3" min="0" max="5" step="0.5" list="tickmarks">
-            <datalist id="tickmarks">
-                <option value="0" label="0"></option>
-                <option value="0.5"></option>
-                <option value="1"></option>
-                <option value="1.5"></option>
-                <option value="2"></option>
-                <option value="2.5" label="2.5"></option>
-                <option value="3"></option>
-                <option value="3.5"></option>
-                <option value="4"></option>
-                <option value="4.5"></option>
-                <option value="5" label="5"></option>
-            </datalist>
+            <fieldset class="starability-coinFlip mb-3">
+                <legend>Rating:</legend>
+                <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="0" checked aria-label="No rating." />
+                <input type="radio" id="first-rate1" name="rating" value="1" />
+                <label for="first-rate1" title="Terrible">1 star</label>
+                <input type="radio" id="first-rate2" name="rating" value="2" />
+                <label for="first-rate2" title="Not good">2 stars</label>
+                <input type="radio" id="first-rate3" name="rating" value="3" />
+                <label for="first-rate3" title="Average">3 stars</label>
+                <input type="radio" id="first-rate4" name="rating" value="4" />
+                <label for="first-rate4" title="Very good">4 stars</label>
+                <input type="radio" id="first-rate5" name="rating" value="5" />
+                <label for="first-rate5" title="Amazing">5 stars</label>
+            </fieldset>
             <input type="hidden" name="campground" value="<%= cg._id %>">
             <input type="hidden" name="author" value="<%= currentUser._id %>">
         </div>
