@@ -35,6 +35,6 @@ let CampgroundSchema = mongoose.Schema({
 
 let Campground = mongoose.model('Campground', CampgroundSchema);
 
-console.log('running campground.js!')
+console.log('running campgrounds.js!')
 
 module.exports = Campground;
