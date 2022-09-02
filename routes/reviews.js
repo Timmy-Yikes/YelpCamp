@@ -23,7 +23,7 @@ router.post('/', isLoggedIn, validateReview, catchAsync(async (req, res) => {
     let {cgId} = req.params;
     let cg = await Campground.findById(cgId);
     let newReview = await Review.create(req.body);
-    cg.reviews.push(newReview);
+    cg.reviews.push(newReview); // You could reference that on Mongoose docs.
     await cg.save();
     req.flash('success', 'New review successfully created!');
     res.redirect(`/campgrounds/${cgId}`);

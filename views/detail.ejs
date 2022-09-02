@@ -31,7 +31,7 @@
                     <h5 class="card-title">Review:<%= review.text %></h5>
                     <p class="card-text">Rating:<%= review.rating %></p>
                     <p class="card-text">Author:<%= review.author.username %></p>
-                    <% if (review.author.username.equals(currentUser.username)) { %>
+                    <% if (currentUser && review.author._id.equals(currentUser._id)) { %>
                         <form action="/campgrounds/<%= cg._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
                             <button class="card-link btn btn-sm btn-danger">Delete</button>
                         </form>

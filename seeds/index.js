@@ -30,7 +30,7 @@ let initDB = async () => {
             price: Math.ceil(Math.random() * 20),
             description: "It's a campground! What do you want for more?",
             location: `${cities[rand].city}, ${cities[rand].state}`,
-            author: "63102361eeff3718620d5130"
+            author: "63109d26e74ffa6041ac77bb"
         });
         camps.push(camp);
     }
