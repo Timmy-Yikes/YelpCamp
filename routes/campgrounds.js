@@ -6,7 +6,7 @@ const {campgroundSchema: cgSchema} = require("../validationSchemas");
 const ExpressError = require("../utility/ExpressError");
 let router = express.Router();
 let isLoggedIn = require('../utility/isLoggedIn');
-let isAuthor = require('../utility/isAuthor');
+let {isCgAuthor} = require('../utility/isAuthor');
 
 let validateCampground = (req, res, next) => {
     let result = cgSchema.validate(req.body);
@@ -26,7 +26,7 @@ router.get('/new', isLoggedIn, (req, res) => {
 
 router.get('/:id', catchAsync(async (req, res) => {
     let {id} = req.params;
-    let cg = await Campground.findById(id).populate('reviews').populate('author');
+    let cg = await Campground.findById(id).populate('reviews').populate('author'); // You can populate nested reviews' author property by using a nesting setting object.
     if (!cg) {
         req.flash('error', 'Cannot find the campground!');
         return res.redirect('/campgrounds');
@@ -38,13 +38,13 @@ router.get('/:id', catchAsync(async (req, res) => {
     res.render('detail', {cg});
 }));
 
-router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(async (req, res) => {
+router.get('/:id/edit', isLoggedIn, isCgAuthor, catchAsync(async (req, res) => {
     let {id} = req.params;
     let cg = await Campground.findById(id);
     res.render('edit', {cg});
 }));
 
-router.put('/:id', isLoggedIn, isAuthor, validateCampground, catchAsync(async (req, res) => {
+router.put('/:id', isLoggedIn, isCgAuthor, validateCampground, catchAsync(async (req, res) => {
     let {id} = req.params;
     await Campground.findByIdAndUpdate(id, req.body, {new: true});
     req.flash('success', 'Campground successfully updated!')
@@ -57,7 +57,7 @@ router.post('/new', isLoggedIn, validateCampground, catchAsync(async (req, res) 
     res.redirect(`/campgrounds/${newCampground._id}`);
 }));
 
-router.delete('/:id', isLoggedIn, isAuthor, catchAsync(async (req, res) => {
+router.delete('/:id', isLoggedIn, isCgAuthor, catchAsync(async (req, res) => {
     let {id} = req.params;
     await Review.deleteMany({campground: id});
     await Campground.findByIdAndDelete(id);

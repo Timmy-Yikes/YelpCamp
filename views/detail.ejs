@@ -29,11 +29,11 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <h5 class="card-title">Review:<%= review.text %></h5>
+                    <h6 class="card-subtitle text-muted my-2">Author:<%= review.author.username %></h6>
                     <p class="card-text">Rating:<%= review.rating %></p>
-                    <p class="card-text">Author:<%= review.author.username %></p>
                     <% if (currentUser && review.author._id.equals(currentUser._id)) { %>
                         <form action="/campgrounds/<%= cg._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
-                            <button class="card-link btn btn-sm btn-danger">Delete</button>
+                            <button class="card-link btn btn-sm btn-outline-danger">Delete</button>
                         </form>
                     <% } %>
                 </div>
