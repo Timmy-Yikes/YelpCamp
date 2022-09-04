@@ -2,6 +2,8 @@ let express = require('express');
 let router = express.Router();
 const {getIndex, renderNewForm, getDetail, renderEditForm, putEditForm, postNewForm, deleteCampground} = require("../controllers/campgrounds");
 let {catchAsync, validateCampground, isLoggedIn, isCgAuthor} = require('../utility/middlewares');
+let multer = require('multer');
+let upload = multer({ dest: 'uploads/' });
 
 router.get('/', catchAsync(getIndex));
 
