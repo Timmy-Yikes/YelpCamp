@@ -10,18 +10,6 @@ module.exports.catchAsync = fn => {
     };
 }
 
-module.exports.validateCampground = (req, res, next) => {
-    let result = campgroundSchema.validate(req.body);
-    if (result.error) throw new ExpressError(400, result.error.details.map(elem => elem.message).join(','));
-    else next();
-}
-
-module.exports.validateReview = (req, res, next) => {
-    let result = reviewSchema.validate(req.body);
-    if (result.error) throw new ExpressError(400, result.error.details.map(elem => elem.message).join(','));
-    else next();
-}
-
 // Middleware used to check if the user is logged in before they try to access to some routes or do some operations which require authentication.
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
@@ -63,6 +51,18 @@ module.exports.isReviewAuthor = async (req, res, next) => {
 module.exports.checkReturnTo = (req, res, next) => {
     if(req.session.returnTo) res.locals.returnTo = req.session.returnTo;
     next();
+}
+
+module.exports.validateCampground = (req, res, next) => {
+    let result = campgroundSchema.validate(req.body);
+    if (result.error) throw new ExpressError(400, result.error.details.map(elem => elem.message).join(','));
+    else next();
+}
+
+module.exports.validateReview = (req, res, next) => {
+    let result = reviewSchema.validate(req.body);
+    if (result.error) throw new ExpressError(400, result.error.details.map(elem => elem.message).join(','));
+    else next();
 }
 
 module.exports.validateUser = (req, res, next) => {

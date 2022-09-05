@@ -6,9 +6,11 @@ let CampgroundSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    image: {
-        type: String,
-        required: true
+    images: {
+        type: [{
+            url: String,
+            filename: String
+        }],
     },
     price: {
         type: Number,
@@ -34,7 +36,5 @@ let CampgroundSchema = mongoose.Schema({
 });
 
 let Campground = mongoose.model('Campground', CampgroundSchema);
-
-console.log('running campgrounds.js!')
 
 module.exports = Campground;

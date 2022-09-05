@@ -7,7 +7,6 @@ module.exports.getIndex = async (req, res) => {
 }
 
 module.exports.renderNewForm = (req, res) => {
-    console.log(req.user)
     res.render('new');
 }
 
@@ -42,9 +41,15 @@ module.exports.putEditForm = async (req, res) => {
 }
 
 module.exports.postNewForm = async (req, res) => {
-    let newCampground = await Campground.create(req.body);
+    let cg = await Campground.create(req.body);
+    cg.images = req.files.map(image => ({
+            url: image.path,
+            filename: image.filename
+        })
+    );
+    await cg.save();
     req.flash('success', 'New campground successfully created!');
-    res.redirect(`/campgrounds/${newCampground._id}`);
+    res.redirect(`/campgrounds/${cg._id}`);
 }
 
 module.exports.deleteCampground = async (req, res) => {

@@ -1,4 +1,6 @@
 // import libs and application creating
+if (process.env.NODE_ENV !== 'production') require('dotenv').config();
+
 let express = require('express');
 let mongoose = require('mongoose');
 let app = express();

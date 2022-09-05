@@ -1,9 +1,12 @@
-// Individual Joi helpers to validating single documents of different models
+// Individual Joi helpers to validate single documents of different models
 let Joi = require('joi');
 
 module.exports.campgroundSchema = Joi.object({
     name: Joi.string().required(),
-    image: Joi.string().required(),
+    images: Joi.array().items(Joi.object({
+        url: Joi.string(),
+        filename: Joi.string()
+    })),
     price: Joi.number().min(0).required(),
     description: Joi.string().required(),
     location: Joi.string().required(),
