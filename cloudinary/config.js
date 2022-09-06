@@ -12,7 +12,7 @@ let storage = new CloudinaryStorage({
     cloudinary,
     params: {
         folder: 'YelpCamp',
-        allowedFormats: ['png', 'jpg', 'jpeg', 'bmp']
+        allowedFormats: ['png', 'jpg', 'jpeg', 'bmp', 'gif']
     }
 });
 

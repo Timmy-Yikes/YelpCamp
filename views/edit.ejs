@@ -2,15 +2,15 @@
 <div class="row">
     <h1 class="text-center">Edit Campground</h1>
     <div class="col offset-3">
-        <form action="/campgrounds/<%= cg._id %>?_method=PUT" method="post" class="needs-validation" novalidate>
+        <form action="/campgrounds/<%= cg._id %>?_method=PUT" method="post" class="needs-validation" novalidate enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="nameInput" class="form-label">Name:&nbsp;</label>
                 <input type="text" name="name" id="nameInput" class="form-control" value="<%= cg.name %>" required>
                 <div class="valid-feedback">Good!</div>
             </div>
             <div class="mb-3">
-                <label for="imgInput" class="form-label">Image URL:&nbsp;</label>
-                <input type="text" name="image" id="imgInput" class="form-control" value="<%= cg.image %>" required>
+                <label for="imagesInput" class="form-label">Images:&nbsp;</label>
+                <input type="file" accept="image/*" name="images" id="imagesInput" class="form-control" multiple>
                 <div class="valid-feedback">Good!</div>
             </div>
             <div class="mb-3">
