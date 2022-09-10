@@ -50,6 +50,7 @@
         </div>
     </div>
     <div class="col-6">
+        <div id='map' style='width: 600px; height: 450px;'></div>
         <% for (let review of cg.reviews) { %>
             <div class="card mb-3">
                 <div class="card-body">
@@ -68,4 +69,10 @@
         <% } %>
     </div>
 </div>
+
+<script>
+    let cg = <%- JSON.stringify(cg) %>;
+    let token = '<%- process.env.MAPBOX_TOKEN %>';
+</script>
+<script src="/js/detailMap.js"></script>
 

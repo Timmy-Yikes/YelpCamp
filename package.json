@@ -13,6 +13,7 @@
   "repository": "https://github.com/Timmy-Yikes/YelpCamp.git",
   "license": "MIT",
   "dependencies": {
+    "@mapbox/mapbox-sdk": "^0.13.4",
     "cloudinary": "^1.31.0",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.6",

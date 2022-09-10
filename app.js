@@ -69,7 +69,7 @@ app.use('/', userRoutes);
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-    res.send('YelpCamp!');
+    res.redirect('/campgrounds');
 });
 
 app.all('*', (req, res, next) =>  {

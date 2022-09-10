@@ -2,6 +2,8 @@ let mongoose = require('mongoose');
 let Campground = require('../models/campground');
 let cities = require('./cities');
 let helpers = require('./seedHelpers');
+let mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+let geocodingService = mbxGeocoding({accessToken: 'pk.eyJ1IjoiY29kaW5naXNncmVhdCIsImEiOiJjbDdzZHZkMnIwbzljM3ByMHVpb2t5eDdrIn0.Lla_SeApcWoH494FCDWNUQ'});
 
 mongoose.connect('mongodb://localhost:27017/yelpcamp')
     .then(() => {
@@ -24,6 +26,11 @@ let initDB = async () => {
     let camps = [];
     for (let i = 0; i < 50; i++) {
         let rand = Math.floor(Math.random() * 1000);
+        let loc = `${cities[rand].city}, ${cities[rand].state}`;
+        // let data = await geocodingService.forwardGeocode({
+        //     query: loc,
+        //     limit: 1
+        // }).send();
         let camp = new Campground({
             name: `${helpers.descriptors[Math.floor(Math.random() * helpers.descriptors.length)]} ${helpers.places[Math.floor(Math.random() * helpers.places.length)]}`,
             images: [{
@@ -35,8 +42,9 @@ let initDB = async () => {
             }],
             price: Math.ceil(Math.random() * 20),
             description: "It's a campground! What do you want for more?",
-            location: `${cities[rand].city}, ${cities[rand].state}`,
-            author: "63102361eeff3718620d5130"
+            location: loc,
+            geometry: {type: 'Point', coordinates: [-74.5, 40]},
+            author: "63109d26e74ffa6041ac77bb"
         });
         camps.push(camp);
     }

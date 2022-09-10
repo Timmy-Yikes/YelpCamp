@@ -30,6 +30,17 @@ let CampgroundSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    geometry: {
+        type: {
+            type: String,
+            enum: ['Point'],
+            required: true
+        },
+        coordinates: {
+            type: [Number],
+            required: true
+        }
+    },
     reviews: [{
         type: Schema.Types.ObjectId,
         ref: 'Review'
