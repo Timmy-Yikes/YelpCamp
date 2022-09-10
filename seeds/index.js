@@ -43,8 +43,8 @@ let initDB = async () => {
             price: Math.ceil(Math.random() * 20),
             description: "It's a campground! What do you want for more?",
             location: loc,
-            geometry: {type: 'Point', coordinates: [-74.5, 40]},
-            author: "63109d26e74ffa6041ac77bb"
+            geometry: {type: 'Point', coordinates: [cities[rand].longitude, cities[rand].latitude]},
+            author: "63102361eeff3718620d5130" //63109d26e74ffa6041ac77bb
         });
         camps.push(camp);
     }

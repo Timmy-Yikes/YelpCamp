@@ -23,6 +23,7 @@
 <% } %>
 
 <script>
+    let cgs = {features: <%- JSON.stringify(cgs) %>};
     let token = '<%- process.env.MAPBOX_TOKEN %>';
 </script>
 <script src="/js/clusterMap.js"></script>
