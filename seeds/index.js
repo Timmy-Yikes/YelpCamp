@@ -24,7 +24,7 @@ let initDB = async () => {
         }
     });
     let camps = [];
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 200; i++) {
         let rand = Math.floor(Math.random() * 1000);
         let loc = `${cities[rand].city}, ${cities[rand].state}`;
         // let data = await geocodingService.forwardGeocode({
@@ -44,7 +44,7 @@ let initDB = async () => {
             description: "It's a campground! What do you want for more?",
             location: loc,
             geometry: {type: 'Point', coordinates: [cities[rand].longitude, cities[rand].latitude]},
-            author: "63102361eeff3718620d5130" //63109d26e74ffa6041ac77bb
+            author: "63109d26e74ffa6041ac77bb" //63102361eeff3718620d5130
         });
         camps.push(camp);
     }

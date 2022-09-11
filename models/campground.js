@@ -1,5 +1,6 @@
 let mongoose = require('mongoose');
 const {Schema} = require("mongoose");
+const {func} = require("joi");
 
 let ImageSchema = mongoose.Schema({
     url: String,
@@ -50,7 +51,16 @@ let CampgroundSchema = mongoose.Schema({
         required: true,
         ref: 'User'
     }
+}, {
+    toJSON: {
+        virtuals: true
+    }
 });
+
+CampgroundSchema.virtual('properties.popUpText').get(function () {
+    return `<a href="/campgrounds/${this._id}">${this.name}</a><br>
+            <p>${this.description.substring(0, 20)}...</p>`
+})
 
 let Campground = mongoose.model('Campground', CampgroundSchema);
 
