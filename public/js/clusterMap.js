@@ -1,6 +1,6 @@
 mapboxgl.accessToken = token;
 const map = new mapboxgl.Map({
-    container: 'map',
+    container: 'cluster-map',
 // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
     style: 'mapbox://styles/mapbox/light-v10',
     center: [-103.5917, 40.6699],
@@ -11,6 +11,8 @@ map.on('load', () => {
 // Add a new source from our GeoJSON data and
 // set the 'cluster' option to true. GL-JS will
 // add the point_count property to your source data.
+    console.log('----------------------------------')
+    console.log(cgs)
     map.addSource('cgs', {
         type: 'geojson',
         data: cgs,
@@ -76,11 +78,17 @@ map.on('load', () => {
         }
     });
 
+    map.addControl(new mapboxgl.NavigationControl({visualizePitch: true}));
+
 // inspect a cluster on click
     map.on('click', 'clusters', (e) => {
+        console.log('-------------------------------')
+        console.log(e.features[0])
         const features = map.queryRenderedFeatures(e.point, {
             layers: ['clusters']
         });
+        // console.log('-------------------------------')
+        // console.log(features)
         const clusterId = features[0].properties.cluster_id;
         map.getSource('cgs').getClusterExpansionZoom(
             clusterId,

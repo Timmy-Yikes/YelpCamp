@@ -1,12 +1,26 @@
 <% layout('/layouts/boilerplate') %>
-<form action="/login" method="post" class="needs-validation" novalidate>
-    <div>
-        <label for="username" class="form-label">Username</label>
-        <input type="text" id="username" name="username" class="form-control" required>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 col-xl-4 offset-xl-4">
+            <div class="card shadow">
+                <img src="https://unsplash.com/photos/YndHL7gQIJE/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8MjB8fGNhbXBpbmd8ZW58MHx8fHwxNjYzMDY5NDgx&force=true" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Log in</h5>
+                    <form action="/login" method="post" class="needs-validation" novalidate>
+                        <div>
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" id="username" name="username" class="form-control" required>
+                        </div>
+                        <div>
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" id="password" name="password" class="form-control" required>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-primary mt-3 btn-block">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <div>
-        <label for="password" class="form-label">Password</label>
-        <input type="password" id="password" name="password" class="form-control" required>
-    </div>
-    <button class="btn btn-outline-primary">Login</button>
-</form>
+</div>
