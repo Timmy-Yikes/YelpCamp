@@ -8,6 +8,7 @@ let path = require('path');
 let methodOverride = require('method-override');
 let ejsMate = require('ejs-mate');
 let ExpressError = require('./utility/ExpressError');
+let mongoSanitize = require('express-mongo-sanitize');
 
 let cgRoutes = require('./routes/campgrounds');
 let reviewRoutes = require('./routes/reviews');
@@ -34,6 +35,7 @@ app.use(session({
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(mongoSanitize());
 
 passport.use(new LocalStrategy(User.authenticate())); // Normally you need to put a verify func into strategy manually, but that Mongoose-related package seems to do it for us.
 passport.serializeUser(User.serializeUser()); // Before using Passport strategy authenticating: Install => Configure (Put verify func) => Register (Use passport.use) => Employ (Put it in passport.authenticate, which is a middleware in routes)
