@@ -1,5 +1,5 @@
 // Individual Joi helpers to validate single documents of different models
-let BaseJoi = require('joi');
+let Joi = require('joi');
 let sanitizeHTML = require('sanitize-html');
 
 let extension = (joi) => {
@@ -24,7 +24,7 @@ let extension = (joi) => {
     }
 }
 
-let Joi = BaseJoi.extend(extension);
+Joi = Joi.extend(extension);
 
 module.exports.campgroundSchema = Joi.object({
     name: Joi.string().required().escapeHTML(),
