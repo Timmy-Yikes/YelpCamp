@@ -1,12 +1,12 @@
 // Individual Joi helpers to validate single documents of different models
-let Joi = require('joi');
+let BaseJoi = require('joi');
 let sanitizeHTML = require('sanitize-html');
 
 let extension = (joi) => {
     return {
         type: 'string',
         base: joi.string(),
-        message: {
+        messages: {
             'string.escapeHTML': '{{#label}} must not include HTML!'
         },
         rules: {
@@ -16,7 +16,7 @@ let extension = (joi) => {
                         allowedTags: [],
                         allowedAttributes: {}
                     });
-                    if (clean !== value) return helpers.error('string.escapeHTML', {value});
+                    if (clean !== value) return helpers.error('string.escapeHTML');
                     return clean;
                 }
             }
@@ -24,7 +24,7 @@ let extension = (joi) => {
     }
 }
 
-Joi = Joi.extend(extension);
+let Joi = BaseJoi.extend(extension);
 
 module.exports.campgroundSchema = Joi.object({
     name: Joi.string().required().escapeHTML(),
