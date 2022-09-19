@@ -34,10 +34,10 @@ let initDB = async () => {
         let camp = new Campground({
             name: `${helpers.descriptors[Math.floor(Math.random() * helpers.descriptors.length)]} ${helpers.places[Math.floor(Math.random() * helpers.places.length)]}`,
             images: [{
-                url: 'https://res.cloudinary.com/codingisgreat/image/upload/v1662368077/YelpCamp/r5eyeguiozujimrnxojp.jpg',
+                url: 'https://res.cloudinary.com/codingisgreat/image/upload/v1662381629/YelpCamp/pzufk3btwmngqkcksete.jpg',
                 filename: 'YelpCamp/r5eyeguiozujimrnxojp'
             }, {
-                url: 'https://res.cloudinary.com/codingisgreat/image/upload/v1662380383/YelpCamp/blkvsbe3scsuvfwrs9oc.jpg',
+                url: 'https://res.cloudinary.com/codingisgreat/image/upload/v1662381624/YelpCamp/tvmhnwiq27bkkilgkf5m.gif',
                 filename: 'YelpCamp/blkvsbe3scsuvfwrs9oc'
             }],
             price: Math.ceil(Math.random() * 20),
