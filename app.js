@@ -20,19 +20,27 @@ let flash = require('connect-flash');
 let passport = require('passport');
 let LocalStrategy = require('passport-local');
 let User = require('./models/user');
+let atlasUrl = process.env.ATLAS_URL || 'mongodb://localhost:27017/yelpcamp';
+let MongoStore = require('connect-mongo');
+let secret = process.env.SECRET || 'Thisisnotagoodsecret!';
 
 // basic setting and daemon
 app.use(methodOverride('_method'));
 app.use(express.urlencoded({extended: true}));
 app.use(session({
     name: 'session',
-    secret: 'Thisisnotagoodsecret!',
+    secret,
     resave: false,
     saveUninitialized: false,
     cookie: {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24 * 7
-    }
+    },
+    store: MongoStore.create({
+        mongoUrl: atlasUrl,
+        touchAfter: 24 * 3600,
+        crypto: {secret}
+    })
 }));
 app.use(flash());
 app.use(passport.initialize());
@@ -95,7 +103,7 @@ app.engine('ejs', ejsMate);
 app.listen('3000', () => {
     console.log('Listening on port 3000!');
 });
-mongoose.connect('mongodb://localhost:27017/yelpcamp')
+mongoose.connect(atlasUrl)
     .then(() => {
         console.log('MongoDB connected on main file!');
     })
