@@ -23,6 +23,7 @@ let User = require('./models/user');
 let atlasUrl = process.env.ATLAS_URL || 'mongodb://localhost:27017/yelpcamp';
 let MongoStore = require('connect-mongo');
 let secret = process.env.SECRET || 'Thisisnotagoodsecret!';
+let port = process.env.PORT || 3000;
 
 // basic setting and daemon
 app.use(methodOverride('_method'));
@@ -100,8 +101,8 @@ passport.deserializeUser(User.deserializeUser()); // Again, that Mongoose-relate
 app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'ejs');
 app.engine('ejs', ejsMate);
-app.listen('3000', () => {
-    console.log('Listening on port 3000!');
+app.listen(port, () => {
+    console.log(`Listening on port ${port}!`);
 });
 mongoose.connect(atlasUrl)
     .then(() => {
