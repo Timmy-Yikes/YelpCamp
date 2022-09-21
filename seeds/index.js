@@ -34,17 +34,17 @@ let initDB = async () => {
         let camp = new Campground({
             name: `${helpers.descriptors[Math.floor(Math.random() * helpers.descriptors.length)]} ${helpers.places[Math.floor(Math.random() * helpers.places.length)]}`,
             images: [{
-                url: 'https://res.cloudinary.com/codingisgreat/image/upload/v1662381629/YelpCamp/pzufk3btwmngqkcksete.jpg',
-                filename: 'YelpCamp/r5eyeguiozujimrnxojp'
+                url: 'https://res.cloudinary.com/codingisgreat/image/upload/v1662700996/YelpCamp/kv0fnhlpyjpfafnxsgo0.jpg',
+                filename: 'YelpCamp/kv0fnhlpyjpfafnxsgo0'
             }, {
-                url: 'https://res.cloudinary.com/codingisgreat/image/upload/v1662381624/YelpCamp/tvmhnwiq27bkkilgkf5m.gif',
-                filename: 'YelpCamp/blkvsbe3scsuvfwrs9oc'
+                url: 'https://res.cloudinary.com/codingisgreat/image/upload/v1662615166/YelpCamp/msnkq1jjjbe5nvnjwyvj.gif',
+                filename: 'YelpCamp/msnkq1jjjbe5nvnjwyvj'
             }],
             price: Math.ceil(Math.random() * 20),
             description: "It's a campground! What do you want for more?",
             location: loc,
             geometry: {type: 'Point', coordinates: [cities[rand].longitude, cities[rand].latitude]},
-            author: "63109d26e74ffa6041ac77bb" //63102361eeff3718620d5130
+            author: "63102361eeff3718620d5130" //63109d26e74ffa6041ac77bb
         });
         camps.push(camp);
     }
